@@ -1,18 +1,15 @@
 import { COMPUTE_WGSL, RENDER_WGSL } from './shaders.js';
 
-const HISTORY_SIZE = 24;
 // PixelState struct layout (must match WGSL exactly, std430-ish storage rules):
-// a: vec2<f32>        -> 8 bytes,  offset 0
-// lnBase: vec2<f32>   -> 8 bytes,  offset 8
-// lastMag: f32         -> 4 bytes, offset 16
-// curDir: i32          -> 4 bytes, offset 20
-// curRunLen: u32        -> 4 bytes, offset 24
-// historyLen: u32       -> 4 bytes, offset 28
-// totalIter: u32        -> 4 bytes, offset 32
-// status: u32           -> 4 bytes, offset 36
-// initialized: u32      -> 4 bytes, offset 40
-// history: array<u32,24>-> 96 bytes, offset 44 -> total 140, padded to 16-byte multiple -> 144
-const PIXEL_STATE_BYTES = 144;
+// a: vec2<f32>          -> 8 bytes,  offset 0   (Brent's "hare")
+// lnBase: vec2<f32>     -> 8 bytes,  offset 8
+// tortoise: vec2<f32>   -> 8 bytes,  offset 16
+// power: u32            -> 4 bytes,  offset 24
+// lam: u32              -> 4 bytes,  offset 28
+// totalIter: u32        -> 4 bytes,  offset 32
+// status: u32           -> 4 bytes,  offset 36
+// initialized: u32      -> 4 bytes,  offset 40 -> total 44, padded to 8-byte multiple -> 48
+const PIXEL_STATE_BYTES = 48;
 
 const canvas = document.getElementById('gpu-canvas');
 const statusEl = document.getElementById('status-text');
