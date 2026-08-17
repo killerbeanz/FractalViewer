@@ -24,7 +24,10 @@ fn c_reciprocal(a: vec2<f32>) -> vec2<f32> {
 }
 
 fn c_div(a: vec2<f32>, b: vec2<f32>) -> vec2<f32> {
-  return c_mul(a, c_reciprocal(b));
+  return c_mul(
+    a,
+    c_reciprocal(b)
+  );
 }
 
 fn c_scale(a: vec2<f32>, s: f32) -> vec2<f32> {
@@ -64,7 +67,10 @@ fn c_lambertw0(x: vec2<f32>) -> vec2<f32> {
     w = x;
   } else {
     let lx = c_ln(x);
-    w = c_sub(lx, c_ln(lx));
+    w = c_sub(
+      lx,
+      c_ln(lx)
+    );
   }
 
   for (
@@ -72,9 +78,20 @@ fn c_lambertw0(x: vec2<f32>) -> vec2<f32> {
     i < 30u;
     i = i + 1u
   ) {
-    let ew = c_exp(w);
-    let wew = c_mul(w, ew);
-    let f = c_sub(wew, x);
+    let ew =
+      c_exp(w);
+
+    let wew =
+      c_mul(
+        w,
+        ew
+      );
+
+    let f =
+      c_sub(
+        wew,
+        x
+      );
 
     let wp1 =
       vec2<f32>(
@@ -130,15 +147,18 @@ export const COMPUTE_WGSL = /* wgsl */ `
 ${COMPLEX_WGSL}
 
 fn f32_max() -> f32 {
-  return bitcast<f32>(0x7F7FFFFFu);
+  return bitcast<f32>(
+    0x7F7FFFFFu
+  );
 }
 
 fn c_eq(
   a: vec2<f32>,
   b: vec2<f32>
 ) -> bool {
-  return a.x == b.x &&
-         a.y == b.y;
+  return
+    a.x == b.x &&
+    a.y == b.y;
 }
 
 struct PixelState {
@@ -178,7 +198,10 @@ states: array<PixelState>;
 
 @group(0) @binding(1)
 var outputTex:
-texture_storage_2d<rgba8unorm, write>;
+texture_storage_2d<
+  rgba8unorm,
+  write
+>;
 
 @group(0) @binding(2)
 var<uniform>
@@ -186,7 +209,8 @@ params: Params;
 
 @group(0) @binding(3)
 var<storage, read_write>
-doneCounter: atomic<u32>;
+doneCounter:
+atomic<u32>;
 
 @group(0) @binding(4)
 var<storage, read>
@@ -194,23 +218,33 @@ gradient: GradientData;
 
 fn gradientEase(t: f32) -> f32 {
   if (gradient.algorithm == 1u) {
-    return t * t * (3.0 - 2.0 * t);
+    return
+      t *
+      t *
+      (3.0 - 2.0 * t);
   }
 
   if (gradient.algorithm == 2u) {
-    return t *
-           t *
-           t *
-           (t *
-           (t * 6.0 - 15.0) +
-           10.0);
+    return
+      t *
+      t *
+      t *
+      (
+        t *
+        (t * 6.0 - 15.0) +
+        10.0
+      );
   }
 
   if (gradient.algorithm == 3u) {
-    return (
-      1.0 -
-      cos(3.14159265 * t)
-    ) * 0.5;
+    return
+      (
+        1.0 -
+        cos(
+          3.14159265 * t
+        )
+      ) *
+      0.5;
   }
 
   return t;
@@ -266,17 +300,21 @@ fn palette(iteration: f32) -> vec3<f32> {
       );
 
     let nextAccumulated =
-      accumulated + weight;
+      accumulated +
+      weight;
 
     if (
-      distance < nextAccumulated ||
-      i == gradient.count - 1u
+      distance <
+        nextAccumulated ||
+      i ==
+        gradient.count - 1u
     ) {
       let localT =
         (
           distance -
           accumulated
-        ) / weight;
+        ) /
+        weight;
 
       let easedT =
         gradientEase(
@@ -288,7 +326,9 @@ fn palette(iteration: f32) -> vec3<f32> {
         );
 
       let nextIndex =
-        (i + 1u) %
+        (
+          i + 1u
+        ) %
         gradient.count;
 
       let a =
@@ -297,8 +337,11 @@ fn palette(iteration: f32) -> vec3<f32> {
       let b =
         gradient.colors[nextIndex].xyz;
 
-      return a +
-        (b - a) *
+      return
+        a +
+        (
+          b - a
+        ) *
         easedT;
     }
 
@@ -372,10 +415,14 @@ fn main(
       );
 
     if (length(z) < 1e-8) {
-      st.status = 4u;
-      st.initialized = 1u;
+      st.status =
+        4u;
 
-      states[idx] = st;
+      st.initialized =
+        1u;
+
+      states[idx] =
+        st;
 
       atomicAdd(
         &doneCounter,
@@ -433,10 +480,14 @@ fn main(
       );
 
     if (boundVal <= 1.0) {
-      st.status = 5u;
-      st.initialized = 1u;
+      st.status =
+        5u;
 
-      states[idx] = st;
+      st.initialized =
+        1u;
+
+      states[idx] =
+        st;
 
       atomicAdd(
         &doneCounter,
@@ -485,10 +536,17 @@ fn main(
         )
       );
 
-    st.power = 1u;
-    st.lam = 1u;
-    st.totalIter = 1u;
-    st.initialized = 1u;
+    st.power =
+      1u;
+
+    st.lam =
+      1u;
+
+    st.totalIter =
+      1u;
+
+    st.initialized =
+      1u;
   }
 
   var iters: u32 = 0u;
@@ -507,7 +565,9 @@ fn main(
         st.tortoise
       )
     ) {
-      st.status = 2u;
+      st.status =
+        2u;
+
       break;
     }
 
@@ -515,7 +575,9 @@ fn main(
       c_abs(st.a);
 
     if (!(mag <= f32_max())) {
-      st.status = 1u;
+      st.status =
+        1u;
+
       break;
     }
 
@@ -523,7 +585,9 @@ fn main(
       st.totalIter >=
       params.maxIter
     ) {
-      st.status = 3u;
+      st.status =
+        3u;
+
       break;
     }
 
@@ -537,7 +601,8 @@ fn main(
       st.power =
         st.power * 2u;
 
-      st.lam = 0u;
+      st.lam =
+        0u;
     }
 
     st.a =
@@ -558,7 +623,8 @@ fn main(
       iters + 1u;
   }
 
-  states[idx] = st;
+  states[idx] =
+    st;
 
   if (st.status != 0u) {
     atomicAdd(
@@ -576,14 +642,9 @@ fn main(
     if (st.status == 1u) {
       color =
         palette(
-          f32(st.totalIter)
-        );
-    } else if (st.status == 3u) {
-      color =
-        vec3<f32>(
-          0.0,
-          0.0,
-          0.0
+          f32(
+            st.totalIter
+          )
         );
     }
 
@@ -619,10 +680,12 @@ fn vs_main(
         -1.0,
         -1.0
       ),
+
       vec2<f32>(
         3.0,
         -1.0
       ),
+
       vec2<f32>(
         -1.0,
         3.0
@@ -643,9 +706,12 @@ fn vs_main(
 
   out.uv =
     vec2<f32>(
-      (p.x + 1.0) * 0.5,
+      (p.x + 1.0) *
+      0.5,
+
       1.0 -
-      (p.y + 1.0) * 0.5
+      (p.y + 1.0) *
+      0.5
     );
 
   return out;
