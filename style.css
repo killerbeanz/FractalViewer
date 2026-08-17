@@ -194,6 +194,113 @@ button.secondary {
   text-align: center;
 }
 
+.gradient-tab {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  z-index: 20;
+  padding: 8px 13px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 7px;
+  background: rgba(20, 20, 20, 0.9);
+  color: #fff;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+}
+
+.gradient-editor {
+  position: fixed;
+  top: 54px;
+  right: 16px;
+  z-index: 20;
+  width: 310px;
+  padding: 14px;
+  display: none;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 10px;
+  background: rgba(18, 18, 18, 0.96);
+  color: #fff;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(12px);
+}
+
+.gradient-editor.open {
+  display: block;
+}
+
+.gradient-editor-header,
+.gradient-stops-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.gradient-editor-header {
+  margin-bottom: 12px;
+  font-weight: 600;
+}
+
+.gradient-close {
+  border: 0;
+  background: transparent;
+  color: #aaa;
+  font-size: 22px;
+  cursor: pointer;
+}
+
+#gradient-preview {
+  display: block;
+  width: 240px;
+  height: 240px;
+  margin: 0 auto 14px;
+}
+
+.gradient-stops-header {
+  margin: 14px 0 8px;
+  font-size: 13px;
+}
+
+#gradient-add-stop {
+  padding: 4px 8px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 5px;
+  background: #252525;
+  color: #fff;
+  cursor: pointer;
+}
+
+.gradient-stop {
+  display: grid;
+  grid-template-columns: 38px 1fr 68px 24px;
+  gap: 7px;
+  align-items: center;
+  margin-bottom: 7px;
+}
+
+.gradient-stop input[type="color"] {
+  width: 38px;
+  height: 30px;
+  padding: 2px;
+}
+
+.gradient-stop input[type="number"] {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.gradient-stop .remove-stop {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #aaa;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.gradient-weight {
+  min-width: 0;
+}
+
 @media (max-width: 640px) {
   .panel { width: calc(100vw - 40px); }
 }
