@@ -48,6 +48,10 @@
       <button id="reset-view-btn" class="secondary">Reset view</button>
     </div>
 
+    <button id="fullscreen-screenshot-btn" class="fullscreen-button">
+      Fullscreen Screenshot
+    </button>
+
     <div class="divider"></div>
 
     <div class="progress-track">
@@ -60,7 +64,9 @@
     <p class="hint">Drag to pan · scroll to zoom</p>
   </div>
 
-  <button id="gradient-tab" class="gradient-tab">Gradient</button>
+  <button id="gradient-tab" class="gradient-tab">
+    Gradient
+  </button>
 
   <div id="gradient-editor" class="gradient-editor">
     <div class="gradient-editor-header">
@@ -68,29 +74,31 @@
       <button id="gradient-close" class="gradient-close">×</button>
     </div>
 
-    <canvas id="gradient-preview" width="260" height="260"></canvas>
+    <canvas
+      id="gradient-preview"
+      width="280"
+      height="280"
+    ></canvas>
 
-    <div class="gradient-controls">
-      <div class="field-row">
-        <label for="gradient-algorithm">algorithm</label>
-        <select id="gradient-algorithm">
-          <option value="linear">Linear</option>
-          <option value="smoothstep">Smoothstep</option>
-          <option value="smootherstep">Smootherstep</option>
-          <option value="cosine">Cosine</option>
-        </select>
-      </div>
+    <div class="field-row">
+      <label for="gradient-algorithm">algorithm</label>
+      <select id="gradient-algorithm">
+        <option value="linear">Linear</option>
+        <option value="smoothstep">Smoothstep</option>
+        <option value="smootherstep">Smootherstep</option>
+        <option value="cosine">Cosine</option>
+      </select>
+    </div>
 
-      <div class="field-row">
-        <label for="gradient-length">gradient length</label>
-        <input
-          id="gradient-length"
-          type="number"
-          min="1"
-          step="1"
-          value="1000"
-        />
-      </div>
+    <div class="field-row">
+      <label for="gradient-length">gradient length</label>
+      <input
+        id="gradient-length"
+        type="number"
+        min="1"
+        step="1"
+        value="1000"
+      />
     </div>
 
     <div class="gradient-stops-header">
